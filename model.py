@@ -15,7 +15,7 @@ class Storage:
         self.expence = []
         self.income = []
         self.balance = 0.0
-        self.path = ''
+        self.path = 'path.txt'
 
     def set(self, reason: str, price: int, mode: int) -> None:
         if mode == Expence:
@@ -35,15 +35,14 @@ class Storage:
                 inc.append(i.replace('\n', '').split('*'))
         self.expence = exp
         self.income = inc
+        self.set_to_file()
 
     def set_to_file(self) -> None:
-        with open(self.path, 'w'):
-            pass
-        with open(self.path, 'a', encoding='utf-8') as file:
+        with open(self.path, 'w', encoding='utf-8') as file:
             for i in self.expence:
-                print(f'{i[0]}*{i[1]}*{i[2]}*{i[3]}', file=file)
+                file.write(f'{i[0]}*{i[1]}*{i[2]}*{i[3]}\n')
             for i in self.income:
-                print(f'{i[0]}*{i[1]}*{i[2]}*{i[3]}', file=file)
+                file.write(f'{i[0]}*{i[1]}*{i[2]}*{i[3]}\n')
 
     def remove(self, choose: int, mode: int) -> None:
         if mode == Expence:

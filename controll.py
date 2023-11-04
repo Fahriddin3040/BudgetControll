@@ -1,13 +1,17 @@
-import model
+import model as Model
+from view import View
 
-Expence = model.Expence
-Income = model.Income
+Expence = Model.Expence
+Income = Model.Income
 
 
-class Use_Case:
+class Controller:
 
     def __init__(self) -> None:
-        self.storage = model.Storage()
+        self.storage = Model.Storage()
+        self.view = View
+        with open(self.storage.path, 'a'):
+            pass
 
     def path_initialization(self):
         self.storage.path = 'path'

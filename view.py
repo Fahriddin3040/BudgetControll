@@ -1,7 +1,6 @@
 Expence = 1
 Income = 2
 
-import controll as con
 
 
 class View:
@@ -17,10 +16,17 @@ class View:
 
     @staticmethod
     def show_main_menu() -> None:
-        menu = ["1.Добваить росход", "2.Добавить доход", "3.История росходов", "4.История доходов", "5.Баланс",
-                "6.Операции", "0.Выход"]
-        for i in menu:
-            print(i)
+        menu = menu = {
+    1: "1.Добваить росход",
+    2: "2.Добавить доход",
+    3: "3.История росходов",
+    4: "4.История доходов",
+    5: "5.Баланс",
+    6: "6.Операции",
+    7: "0.Выход"
+        }
+        for i in range(1, len(menu) + 1):
+            print(menu[i])
 
     @staticmethod
     def show_operation_menu() -> None:
