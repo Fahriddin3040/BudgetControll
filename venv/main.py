@@ -1,15 +1,17 @@
 from controll import Controller
+import view
+
 
 
 def press_enter():
-    input("Нажмите ENTER для продолжения...")
+    s = input("Нажмите ENTER для продолжения... если осмелитесь")
 
 
 if __name__ == "__main__":
     controller = Controller()
-    controller.storage.get()
+    view = view.View()
     while True:
-        controller.view.show_main_menu()
+        view.show_main_menu()
         try:
             choose = int(input('\n\tВыберите нужный вам раздел сверху: '))
             print()
@@ -17,25 +19,24 @@ if __name__ == "__main__":
             if choose == 1:
                 reason = input('\nВведите причину дохода: ')
                 price = float(input("Введите сумму дохода: "))
-                controller.add_expence(reason=reason, price=price)
-
+                controller.set_expence(reason=reason, price=price)
 
             elif choose == 2:
                 reason = input('\nВведите причину дохода: ')
                 price = float(input("Введите сумму дохода: "))
-                controller.add_income(reason=reason, price=price)
+                controller.set_income(reason=reason, price=price)
                 press_enter()
 
             elif choose == 3:
-                controller.show_expence()
+                view.show_expence()
                 press_enter()
 
             elif choose == 4:
-                controller.show_income()
+                view.show_income()
                 press_enter()
 
             elif choose == 5:
-                print('\nВаш баланс: ', controller.show_balance())
+                view.show_balance()
                 press_enter()
 
             elif choose == 6:
@@ -46,13 +47,14 @@ if __name__ == "__main__":
 
                     mode = int(input('\nИзменения над\n\t1.Росходами\n\t2.Доходами\n\tВаш выбор: '))
                     if mode == 1:
-                        controller.view.print_notes(controller.storage.expence)
+                        view.show_expence()
                     elif mode == 2:
-                        controller.view.print_notes(controller.storage.income)
+                        view.show_income()
                     elif mode == 3:
                         raise EOFError
                     else:
                         raise IndexError
+
                     change_choose = int(input('\nВыберите строку свыше для её изменения: '))
                     reason = input('\nВведите причину дохода: ')
                     price = float(input("Введите сумму дохода: "))
@@ -62,9 +64,11 @@ if __name__ == "__main__":
                 elif chooseOps == 2:
                     mode = int(input('\nУдаление:\n\t1.Росхода\n\t2.Дохода\n\tВаш выбор: '))
                     if mode == 1:
-                        controller.view.print_notes(controller.storage.expence)
+                        view.show_expence()
                     elif mode == 2:
-                        controller.view.print_notes(controller.storage.income)
+                        view.show_income()
+                    elif mode == 3:
+                        raise EOFError
                     else:
                         raise IndexError
                     remove_choose = int(input("Выберите строку свыше, для её удаления: "))

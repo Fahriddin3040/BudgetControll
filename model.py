@@ -2,20 +2,19 @@ from datetime import datetime
 
 Expence = 1
 Income = 2
-
 time_now = datetime.now()
 
 
-# time_now.utctime("%d/%m/%y %I:%M")
-
-
-class Storage:
+class Model:
 
     def __init__(self) -> None:
         self.expence = []
         self.income = []
-        self.balance = 0.0
         self.path = 'path.txt'
+        self.balance = 0.0
+        with open(self.path, 'a'):
+            pass
+        self.get()
 
     def set(self, reason: str, price: int, mode: int) -> None:
         if mode == Expence:
@@ -25,16 +24,14 @@ class Storage:
             self.set_to_file()
 
     def get(self) -> None:
-        exp, inc, var = [], [], []
+        var = []
         with open(self.path, 'r', encoding='utf-8') as file:
             var = file.readlines()
         for i in var:
             if i[0] == 'e':
-                exp.append(i.replace('\n', '').split('*'))
+                self.expence.append(i.replace('\n', '').split('*'))
             elif i[0] == 'i':
-                inc.append(i.replace('\n', '').split('*'))
-        self.expence = exp
-        self.income = inc
+                self.income.append(i.replace('\n', '').split('*'))
         self.set_to_file()
 
     def set_to_file(self) -> None:
@@ -64,7 +61,14 @@ class Storage:
             raise IndexError
         self.set_to_file()
 
+    def get_balance(self) -> float:
+        for i in self.expence:
+            self.balance -= float(i[2])
+        for i in self.income:
+            self.balance += float(i[2])
 
+    def get_lists(self):
+        return self.expence, self.income
 
 
 

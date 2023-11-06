@@ -1,44 +1,43 @@
-Expence = 1
-Income = 2
-
+from controll import Controller
 
 
 class View:
-    @staticmethod
-    def print_notes(nested_list: list) -> None:
-        if type == 1:
-            print('\n\tРосходы:')
-        elif type == 2:
-            print('\n\tДоходы:')
-        for i in range(0, len(nested_list)):
-            print(f'\t\t{i + 1}.Причина: {nested_list[i][1]} . Сумма: {nested_list[i][2]} . Дата: {nested_list[i][3]}.')
-        print()
+
+    def __init__(self):
+        self.controller = Controller()
+
+    def show_balance(self) -> None:
+        balance = self.controller.get_balance()
+        print(f"\n\tВаш баланс состовляет: {balance}")
+
+    def show_expence(self) -> None:
+        print('\n\tРосходы:')
+        for i in range(0, len(self.controller.model.expence)):
+            print(f'\t\t{i + 1}.Причина: {self.controller.model.expence[i][1]} .'
+                  f' Сумма: {self.controller.model.expence[i][2]} . Дата: {self.controller.model.expence[i][3]}.')
+
+    def show_income(self) -> None:
+        print('\n\tДоходы:')
+        for i in range(0, len(self.controller.model.income)):
+            print(f'\t\t{i + 1}.Причина: {self.controller.model.income[i][1]} .'
+                  f' Сумма: {self.controller.model.income[i][2]} . Дата: {self.controller.model.income[i][3]}.')
 
     @staticmethod
     def show_main_menu() -> None:
-        menu = menu = {
-    1: "1.Добваить росход",
-    2: "2.Добавить доход",
-    3: "3.История росходов",
-    4: "4.История доходов",
-    5: "5.Баланс",
-    6: "6.Операции",
-    7: "0.Выход"
-        }
-        for i in range(1, len(menu) + 1):
-            print(menu[i])
+        menu = [
+            "1.Добваить росход",
+            "2.Добавить доход",
+            "3.История росходов",
+            "4.История доходов",
+            "5.Баланс",
+            "6.Операции",
+            "0.Выход"
+        ]
+        for i in menu:
+            print(i)
 
     @staticmethod
     def show_operation_menu() -> None:
         menu = {'1.Изменить', '2.Удалить', '3.Главное меню'}
         for i in menu:
             print(i)
-
-    @staticmethod
-    def get_balance(expence, income: []) -> float:
-        balance = 0.0
-        for i in expence:
-            balance -= float(i[2])
-        for i in income:
-            balance += float(i[2])
-        return balance
