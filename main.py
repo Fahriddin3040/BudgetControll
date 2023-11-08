@@ -1,17 +1,15 @@
-from controll import Controller
 import view
 
+EXPENCE = 1
+INCOME = 2
 
+def main():
+    def press_enter(): s = input('Нажмите на ENTER для продолжения...')
+    note_view = view.NoteView()
 
-def press_enter():
-    s = input("Нажмите ENTER для продолжения... если осмелитесь")
-
-
-if __name__ == "__main__":
-    controller = Controller()
-    view = view.View()
     while True:
-        view.show_main_menu()
+
+        note_view.show_main_menu()
         try:
             choose = int(input('\n\tВыберите нужный вам раздел сверху: '))
             print()
@@ -19,24 +17,25 @@ if __name__ == "__main__":
             if choose == 1:
                 reason = input('\nВведите причину дохода: ')
                 price = float(input("Введите сумму дохода: "))
-                controller.set_expence(reason=reason, price=price)
+                note_view.set(mode=EXPENCE, reason=reason, price=price)
+                press_enter()
 
             elif choose == 2:
                 reason = input('\nВведите причину дохода: ')
                 price = float(input("Введите сумму дохода: "))
-                controller.set_income(reason=reason, price=price)
+                note_view.set(mode=INCOME, reason=reason, price=price)
                 press_enter()
 
             elif choose == 3:
-                view.show_expence()
+                note_view.show_expence()
                 press_enter()
 
             elif choose == 4:
-                view.show_income()
+                note_view.show_income()
                 press_enter()
 
             elif choose == 5:
-                view.show_balance()
+                note_view.show_balance()
                 press_enter()
 
             elif choose == 6:
@@ -45,38 +44,35 @@ if __name__ == "__main__":
 
                 if chooseOps == 1:
 
-                    mode = int(input('\nИзменения над\n\t1.Росходами\n\t2.Доходами\n\tВаш выбор: '))
-                    if mode == 1:
-                        view.show_expence()
-                    elif mode == 2:
-                        view.show_income()
-                    elif mode == 3:
-                        raise EOFError
+                    mode = int(input('\nИзменения над\n\t1.Росходами\n\t2.Доходами\n\t0.Главное меню\n\tВаш выбор: '))
+                    if mode == EXPENCE:
+                        note_view.show_expence()
+                    elif mode == INCOME:
+                        note_view.show_income()
+                    elif mode == 0:
+                        return
                     else:
                         raise IndexError
 
                     change_choose = int(input('\nВыберите строку свыше для её изменения: '))
                     reason = input('\nВведите причину дохода: ')
                     price = float(input("Введите сумму дохода: "))
-                    controller.update(mode=mode, choose=change_choose, reason=reason, price=price)
-                    press_enter()
+                    note_view.update(mode=mode, choose=change_choose, price=price, reason=reason)
 
                 elif chooseOps == 2:
-                    mode = int(input('\nУдаление:\n\t1.Росхода\n\t2.Дохода\n\tВаш выбор: '))
-                    if mode == 1:
-                        view.show_expence()
-                    elif mode == 2:
-                        view.show_income()
-                    elif mode == 3:
-                        raise EOFError
+                    mode = int(input('\nУдаление:\n\t1.Росхода\n\t2.Дохода\n\t0.Главное меню\n\tВаш выбор: '))
+                    if mode == EXPENCE:
+                        note_view.show_expence()
+                    elif mode == INCOME:
+                        note_view.show_income()
+                    elif mode == 0:
+                        return
                     else:
                         raise IndexError
                     remove_choose = int(input("Выберите строку свыше, для её удаления: "))
-                    controller.remove(choose=remove_choose, mode=mode)
-                    press_enter()
-
+                    note_view.remove(choose=remove_choose, mode=mode)
                 elif chooseOps == 0:
-                    break
+                    return
 
                 else:
                     print('Выбран неправильныый раздел операций!')
@@ -89,7 +85,8 @@ if __name__ == "__main__":
         except IndexError:
             print('\nНеправильный выбор! Попробуйте заново!')
             press_enter()
-        except EOFError:
-            pass
 
 
+
+if __name__ == '__main__':
+    main()

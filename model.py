@@ -1,11 +1,11 @@
 from datetime import datetime
 
-Expence = 1
-Income = 2
+EXPENCE = 1
+INCOME = 2
 time_now = datetime.now()
 
 
-class Model:
+class NoteModel:
 
     def __init__(self) -> None:
         self.expence = []
@@ -17,9 +17,9 @@ class Model:
         self.get()
 
     def set(self, reason: str, price: int, mode: int) -> None:
-        if mode == Expence:
+        if mode == EXPENCE:
             self.expence.append(['e', reason, price, time_now.strftime("%d/%m/%y %I:%M")])
-        elif mode == Income:
+        elif mode == INCOME:
             self.income.append(['i', reason, price, time_now.strftime("%d/%m/%y %I:%M")])
             self.set_to_file()
 
@@ -42,17 +42,17 @@ class Model:
                 file.write(f'{i[0]}*{i[1]}*{i[2]}*{i[3]}\n')
 
     def remove(self, choose: int, mode: int) -> None:
-        if mode == Expence:
+        if mode == EXPENCE:
             del self.expence[choose - 1]
-        elif mode == Income:
+        elif mode == INCOME:
             del self.income[choose - 1]
         self.set_to_file()
 
     def update(self, mode: int, choose: int, reason, price: str) -> None:
-        if mode == Expence:
+        if mode == EXPENCE:
             self.expence[choose - 1][1] = reason
             self.expence[choose - 1][2] = price
-        elif mode == Income:
+        elif mode == INCOME:
             self.income[choose - 1][1] = reason
             self.income[choose - 1][2] = price
         elif mode == 0:
